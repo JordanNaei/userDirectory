@@ -39,24 +39,25 @@ class SearchResultContainer extends Component {
 
   handleInputChange = event => {
     // Getting the value and name of the input which triggered the change
-    const { name, value } = event.target;
-    console.log(value);
+    const { value } = event.target;
     // Updating the input's state
     this.setState({
-      [name]: value
+      searchName: value
     });
   };
 
   // When the form is submitted, search the Giphy API for `this.state.search`
   handleFormSubmit = event => {
     event.preventDefault();
-    if (this.state.search === "") {
+    if (this.state.searchName === "") {
       this.setState({
         result: [...this.state.originalLoad],
+        search: "",
         searchName: ""
+        
       })
     } else {
-      const pStrg = this.toTitleCase(this.state.search);
+      const pStrg = this.toTitleCase(this.state.searchName);
       this.filterEmployees(pStrg);
     }
 
@@ -66,6 +67,8 @@ class SearchResultContainer extends Component {
     event.preventDefault();
     this.setState({
       result: [...this.state.originalLoad],
+      search: "",
+      searchName: ""
     })
     
 
@@ -82,10 +85,9 @@ class SearchResultContainer extends Component {
 
  filterEmployees = async (searchkey) => {
     var filterResult = this.state.result.filter(person => person.firstName === searchkey);
-    console.log(filterResult);
     this.setState({
       result: filterResult,
-      searchName: searchkey
+      searchName: ""
     })
   }
 
@@ -130,12 +132,13 @@ class SearchResultContainer extends Component {
           </div>
         </div>
         <div className="row text-center">
-          <div className="col-md-6">
+          <div className="col-md-6 center-block">
             <SearchForm
-              value={this.state.search}
+              searchName={this.state.searchName}
               handleInputChange={this.handleInputChange}
               handleFormSubmit={this.handleFormSubmit}
               handleReload={this.handleReload}
+              className= "text-center"
             />
           </div>
         </div>

@@ -4,17 +4,20 @@ const styles = {
   card: {
     marginLeft: 20,
   },
+  center: {
+  margin: 50,
+  }
 };
 
 function SearchForm(props) {
   return (
-    <form className="form">
+    <form className="form text-center" style={styles.center}>
       <div className="form-group text-center">
         <label htmlFor="search">Search:</label>
         <input
           onChange={props.handleInputChange}
-          value={props.search}
-          name="search"
+          value={props.searchName}
+          name="firstName"
           type="text"
           className="form-control"
           placeholder="Search By First Name"
