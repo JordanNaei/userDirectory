@@ -54,7 +54,7 @@ class SearchResultContainer extends Component {
         result: [...this.state.originalLoad],
         search: "",
         searchName: ""
-        
+
       })
     } else {
       const pStrg = this.toTitleCase(this.state.searchName);
@@ -70,7 +70,7 @@ class SearchResultContainer extends Component {
       search: "",
       searchName: ""
     })
-    
+
 
   };
 
@@ -83,7 +83,7 @@ class SearchResultContainer extends Component {
     );
   }
 
- filterEmployees = async (searchkey) => {
+  filterEmployees = async (searchkey) => {
     var filterResult = this.state.result.filter(person => person.firstName === searchkey);
     this.setState({
       result: filterResult,
@@ -138,24 +138,21 @@ class SearchResultContainer extends Component {
               handleInputChange={this.handleInputChange}
               handleFormSubmit={this.handleFormSubmit}
               handleReload={this.handleReload}
-              className= "text-center"
             />
           </div>
         </div>
 
         <div className="row">
-
           <table className="table">
             <tr>
               <th scope="col"> Photo</th>
               <th scope="col"><input className="form-check-input" name="firstName" onChange={event => this.handleSorting(event)} type="checkbox" id="flexCheckDefault1" />FirstName</th>
-              <th scope="col"><input className="form-check-input" name="lastName" onChange={event => this.handleSorting(event)} type="checkbox"  id="flexCheckDefault2" />LastName </th>
+              <th scope="col"><input className="form-check-input" name="lastName" onChange={event => this.handleSorting(event)} type="checkbox" id="flexCheckDefault2" />LastName </th>
               <th scope="col"><input className="form-check-input" name="email" onChange={event => this.handleSorting(event)} type="checkbox" id="flexCheckDefault3" />Email</th>
               <th scope="col"><input className="form-check-input" name="phone" onChange={event => this.handleSorting(event)} type="checkbox" id="flexCheckDefault4" />Phone</th>
             </tr>
-
-
-            {this.state.result.map(info => (
+            {this.state.result.length !== 0 || undefined ? (
+              this.state.result.map(info => (
                 <EmployeeCard
                   picture={info.picture}
                   firstName={info.firstName}
@@ -163,7 +160,18 @@ class SearchResultContainer extends Component {
                   email={info.email}
                   phone={info.phone}
                   key={info.key}
-                ></EmployeeCard>))}
+                  handleSorting={this.handleSorting}
+                ></EmployeeCard>))) :
+
+              (<EmployeeCard
+                picture=""
+                firstName=""
+                lastName=""
+                email=""
+                phone=""
+                key=""><td><b>No result found, reload employee</b></td></EmployeeCard>)
+
+            }
           </table>
         </div>
 
