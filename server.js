@@ -1,10 +1,24 @@
-var express = require('express')
-var path = require('path')
-var serveStatic = require('serve-static')
+const express = require("express");
 
-var app = express()
-app.use(serveStatic(path.join(__dirname, 'dist')))
+// const mongoose = require("mongoose");
+// const routes = require("./routes");
+const app = express();
+const PORT = process.env.PORT || 3001;
 
-var port = process.env.PORT || 3001
-app.listen(port)
-console.log('server started ' + port)
+// Define middleware here
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+// Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+// Add routes, both API and view
+// app.use(routes);
+
+// Connect to the Mongo DB
+// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/reactcms");
+
+// Start the API server
+app.listen(PORT, function() {
+  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+});
